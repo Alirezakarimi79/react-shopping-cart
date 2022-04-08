@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 
 import { formatCurrency } from "./../utils/formatCurrency";
 import { fetchProducts } from "../redux/actios/productActions";
+import { addToCart } from './../redux/actios/cartActions';
 
 const Products = ({ products, addToCart, fetchProducts }) => {
   const [product, setProduct] = useState(null);
@@ -100,6 +101,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   fetchProducts,
+  addToCart
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Products);
