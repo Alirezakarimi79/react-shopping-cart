@@ -79,10 +79,6 @@ const Cart = ({
                   <div>{order.name}</div>
                 </li>
                 <li>
-                  <div>تاریخ:</div>
-                  <div>{Date.now()}</div>
-                </li>
-                <li>
                   <div>جمع:</div>
                   <div>{formatCurrency(order.total)}</div>
                 </li>
