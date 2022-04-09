@@ -24,15 +24,12 @@ export const addToCart = (product) => {
 export const removeFromCart = (product) => {
   return (dispatch, getState) => {
     let cartItems = getState().cart.cartItems.slice();
-    // let alreadyExist = true;
     let element = cartItems.find((item) => item._id == product._id);
     if (element.count <= 1) {
       cartItems = cartItems.filter((item) => item._id != element._id);
     } else {
       element.count--;
     }
-    console.log(element)
-    console.log(cartItems);
     dispatch({
       type: cartTypes.REMOVE_FROM_CART,
       payload: { cartItems },
@@ -41,13 +38,4 @@ export const removeFromCart = (product) => {
   };
 };
 
-// const filteredItems = cartItems.filter((item) => item._id !== product._id);
-// cartItems.forEach((element) => {
-//   if (element._id === product._id) {
-//     if (element.count === 1) {
-//      return cartItems.filter((item) => item._id !== product._id)
-//     } else {
-//       return element.count--;
-//     }
-//   }
-// });
+
