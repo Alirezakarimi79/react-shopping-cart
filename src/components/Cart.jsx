@@ -72,11 +72,11 @@ const Cart = ({
                 </li>
                 <li>
                   <div>ایمیل:</div>
-                  <div>{order.name}</div>
+                  <div>{order.email}</div>
                 </li>
                 <li>
                   <div>آدرس:</div>
-                  <div>{order.name}</div>
+                  <div>{order.address}</div>
                 </li>
                 <li>
                   <div>جمع:</div>
