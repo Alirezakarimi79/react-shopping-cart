@@ -1,11 +1,19 @@
-import React, { useState } from "react";
-import { Fade } from "react-reveal";
+import React, { Fragment, useState } from "react";
+import { Fade, Zoom } from "react-reveal";
 import { connect } from "react-redux";
+import Modal from "react-modal/lib/components/Modal";
 
 import { formatCurrency } from "./../utils/formatCurrency";
 import { removeFromCart } from "../redux/actios/cartActions";
+import { createOrder, clearOrder } from "../redux/actios/orderActions";
 
-const Cart = ({ cartItems, removeFromCart, createOrder }) => {
+const Cart = ({
+  cartItems,
+  removeFromCart,
+  createOrder,
+  clearOrder,
+  order,
+}) => {
   const [showCheckout, setShowCheckout] = useState(false);
   const [formValue, setFormValue] = useState({
     name: "",
@@ -24,12 +32,22 @@ const Cart = ({ cartItems, removeFromCart, createOrder }) => {
       email: formValue.email,
       address: formValue.address,
       cartItems,
+      total: cartItems.reduce(
+        (item, element) => item + element.count * element.price,
+        0
+      ),
     };
     createOrder(order);
+    setShowCheckout(false)
+  };
+
+  const closeModal = () => {
+    clearOrder();
   };
 
   return (
-    <div>
+  <Fragment>
+      {!cartItems ? (<div>لطفا کمی صبور باشید...</div>) : (<div>
       {cartItems.length === 0 ? (
         <div className="cart cart-header">سبد خرید خالی است</div>
       ) : (
@@ -37,6 +55,47 @@ const Cart = ({ cartItems, removeFromCart, createOrder }) => {
           محصول در سبد خرید دارید{" "}
           <span style={{ margin: "0 2px" }}> {cartItems.length} </span> شما
         </div>
+      )}
+      {order && (
+        <Modal isOpen={true} onRequestClose={closeModal}>
+          <Zoom>
+            <button className="button close-modal" onClick={closeModal}>
+              x
+            </button>
+            <div className="order-details">
+              <h3 className="success-message">.سفارش شما ثبت شده است</h3>
+              <h2>سفارش {order._id}</h2>
+              <ul>
+                <li>
+                  <div>نام:</div>
+                  <div>{order.name}</div>
+                </li>
+                <li>
+                  <div>ایمیل:</div>
+                  <div>{order.name}</div>
+                </li>
+                <li>
+                  <div>آدرس:</div>
+                  <div>{order.name}</div>
+                </li>
+                <li>
+                  <div>تاریخ:</div>
+                  <div>{Date.now()}</div>
+                </li>
+                <li>
+                  <div>جمع:</div>
+                  <div>{formatCurrency(order.total)}</div>
+                </li>
+                <li>
+                  <div>اقلام سبد خرید:</div>
+                  <div>{order.cartItems.map((item)=>(
+                    <div>{item.count} x {item.price}</div>
+                  ))}</div>
+                </li>
+              </ul>
+            </div>
+          </Zoom>
+        </Modal>
       )}
       <Fade left cascade>
         <div className="cart">
@@ -126,18 +185,22 @@ const Cart = ({ cartItems, removeFromCart, createOrder }) => {
           </div>
         </Fade>
       )}
-    </div>
+    </div>)}
+  </Fragment>
   );
 };
 
 const mapStateToProps = (state) => {
   return {
     cartItems: state.cart.cartItems,
+    order: state.order.order,
   };
 };
 
 const mapDispatchToProps = {
   removeFromCart,
+  createOrder,
+  clearOrder,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart);

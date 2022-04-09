@@ -21,7 +21,7 @@ const App = () => {
           </div>
         </div>
       </main>
-      <footer>تمام حقوق محفوظ است</footer>
+      <footer>لطفا تمام حقوق محفوظ شود</footer>
     </div>
   );
 };

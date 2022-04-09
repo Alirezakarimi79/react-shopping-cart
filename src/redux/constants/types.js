@@ -7,5 +7,10 @@ export const productTypes = {
 export const cartTypes = {
   ADD_TO_CART: "ADD_TO_CART",
   REMOVE_FROM_CART: "REMOVE_FROM_CART",
-}
+};
 
+export const orderTypes = {
+  CREATE_ORDER: "CREATE_ORDER",
+  CLEAR_ORDER: "CLEAR_ORDER",
+  CLEAR_CART: "CLEAR_CART",
+};
